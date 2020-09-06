@@ -1,0 +1,72 @@
+
+<!DOCTYPE html><html lang="ja">
+<head>
+<title>{{context.title}}</title>
+	<link rel="icon" href="/static/pic/1.jpg" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/pic/1.jpg" type="image/x-icon" />
+<script>
+
+</script>
+<style type="text/css">
+
+<!--
+.box{
+	float: left; 
+	color:black;
+	font-size:12px;
+	text-align:leftwards;
+	}
+p{
+	font-size:8px;
+	text-align:left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:3; 
+	-webkit-box-orient: vertical;
+	}
+-->
+</style>
+</head>
+<body>
+{% if context.person.1 < 18 %}
+<h3 align="center">时间：{{context.time | date:"Y-m-d H:i:s" }}</h3>
+{% else %}
+<h3 align="center">时间：{{context.time | date:"Y-m-d H:i:s" }}</h3>
+{% endif %}
+<div>
+	{% if context.member_list %}
+		{% for li in context.member_list %}
+		<div style="float:left;width:22.5%;">
+			{% load static %}
+				<div class="box" >				
+					<video muted width="400" height="270" controls  preload="none">
+					  <source src="/static/傳說/{{li.address}}" type="video/mp4">
+					</video>
+				</div>
+				<div class="box" >
+					<p>
+						名前:{{li.name}}
+					<br>
+						年目:{{li.age}}
+					<br> 
+						メール:{{li.address}}
+					<br> 
+						時間:{{li.inttime}}
+					<br> 
+						地点:{{li.area}}
+					<br> 
+					</p>
+				</div>
+		</div>	
+	{% empty %}
+		<li>no!</li>
+		{% endfor %}
+	{% endif %}
+</div>
+{% load mydigit %}
+	<br>
+	<br>
+	<p align="right">数量：{{context.num | mydigit:4}} </p>
+</body>
+</html>

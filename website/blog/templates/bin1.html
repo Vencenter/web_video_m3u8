@@ -1,0 +1,90 @@
+
+<!DOCTYPE html><html lang="ja">
+
+
+<head>
+<title>{{context.title}}</title>
+<style type="text/css">
+
+<!--
+
+
+img{
+		float: left; 
+		width: 100px;
+		height:150px;
+		vertical-align:middle;
+	  }
+div{
+	
+	}
+
+.box{
+	float: left; 
+	color:black;
+	font-size:12px;
+	text-align:leftwards;
+	}
+.box img
+{
+	width:40%;
+	heght:10%;
+}
+
+	
+txt{
+	height:23px; 
+	width:75px; 
+	text-align:center;
+	}
+
+-->
+</style>
+</head>
+
+<body>
+
+
+{% if context.person.1 < 18 %}
+<h3 align="center">アダルトがないとしたら入れないでください！</h3>
+{% else %}
+<h3 align="center">もうアダルトになって入れでください！名前:{{context.person.0}}</h3>
+{% endif %}
+
+<div>
+
+	{% if context.pic %}
+		{% for li in context.pic %}
+		<div style="float:left;width:12.5%;">
+			{% load static %}
+				<div class="box" >
+					<a href="/static/vedio/{{context.address}}"><img src="/static/pic/{{ li }}"  ></a>
+				</div>
+				<div class="box" >
+					<p>
+						名前:{{context.person.0}}
+					<br>
+					 
+						年目:{{context.person.1}}
+					<br> 
+						メール:{{context.person.2}}
+					<br> 
+					</p>
+				</div>
+		</div>
+								
+			
+	{% empty %}
+		<li>no!</li>
+		{% endfor %}
+	{% endif %}
+</div>
+
+{% load mydigit %}
+	<br>
+	<br>
+	<p align="right">数量：{{context.num | mydigit:4}} </p>
+	<h2 align="right">时间：{{context.time | date:"Y-m-d H:i:s" }}</h2>
+</body>
+
+</html>

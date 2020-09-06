@@ -1,0 +1,22 @@
+cd /d D:\Driver_E\Django\website_
+
+manage.py makemigrations blog_
+
+manage.py migrate
+
+manage.py inspectdb
+
+manage.py inspectdb > blog_/models.py
+
+
+manage.py createsuperuser
+
+zhaojianxi
+
+zhaojianxi
+
+1、可以先删除各个app中的migetions文件夹中的  类似于0001_initial.py文件。
+
+2、删除数据库表django_migrations 中的关于几个app的数据，即可，删除这些数据，对数据不会产生影响，所以，可以放心删除(删除的数据库和django makemigrations)
+
+3、重新执行python manage.py makemigrations 和python manage.py migrate 即可

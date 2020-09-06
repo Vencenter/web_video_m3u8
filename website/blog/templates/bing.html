@@ -1,0 +1,32 @@
+<head>
+<title>{{context.title}}</title>
+</head>
+
+<body>
+<h5 align="center">name:{{context.person.0}}</h5>
+
+<h5 align="center">age:{{context.person.1}}</h5>
+
+<h5 align="center">email:{{context.person.2}}</h5>
+<br>
+{% if age < 18 %}#模板语法使用
+<h3　align="right">アダルトがないとしたら入れないでください！</h3>
+{% else %}
+<h3 align="right">もうアダルトになって入れでください！名前:{{context.person.0}}</h3>
+{% endif %}
+<h1 align="right">时间：{{context.time | date:"Y-m-d-D" }}</h1>
+{% if context.jyoyu %} #模板语法使用
+    {% for li in context.jyoyu %}
+		<li>{{li | upper | lower | capfirst}}</li>#过滤器使用，内置
+    {% empty %}
+		<li>no!</li>
+   
+	{% endfor %}
+{% endif %}
+
+{% load mydigit %}
+
+	<p>数量：{{context.person.1 | mydigit:12}} </p>#过滤器使用，自定义
+</body>
+
+</html>

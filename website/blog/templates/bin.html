@@ -1,0 +1,82 @@
+
+<!DOCTYPE html><html lang="ja">
+
+
+<head>
+<title>{{context.title}}</title>
+<style type="text/css">
+
+<!--
+
+
+img{
+		float: left; 
+		width: 100px;
+		height:150px;
+		vertical-align:middle;
+	  }
+
+
+p{
+	float: left; 
+	color:black;
+	font-size:12px;
+	}
+	
+txt{
+	height:23px; 
+	width:75px; 
+	text-align:center;
+	}
+
+-->
+</style>
+</head>
+
+<body>
+
+
+{% if age < 18 %}
+	<h3 align="right">アダルトがないとしたら入れないでください！</h3>
+{% else %}
+	<h3 align="right">もうアダルトになって入れでください！名前:{{context.person.0}}</h3>
+{% endif %}
+<h1 align="right">时间：{{context.time | date:"Y-m-d H:i" }}</h1>
+<div>
+
+	{% if context.pic %}
+		{% for li in context.pic %}
+			{% load static %}
+				<div class="photo" >
+					<img src="/static/{{ li }}" width=120 height=175 align="absbottom" >
+				</div>
+				<div >
+				
+					<p>
+					<br> 
+					<br> 
+					<br> 
+					<br> 
+						名前:{{context.person.0}}
+					<br>
+					 
+						年目:{{context.person.1}}
+						<input type="button" value="    " >
+					<br> 
+						メール:{{li}}
+					</p>
+				</div>
+				
+					
+			
+	{% empty %}
+		<li>no!</li>
+		{% endfor %}
+	{% endif %}
+</div>
+
+{% load mydigit %}
+	<p>数量：{{context.num | mydigit:4}} </p>
+</body>
+
+</html>

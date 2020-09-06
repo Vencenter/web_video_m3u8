@@ -1,0 +1,136 @@
+
+<!DOCTYPE html><html lang="ja">
+
+
+<head>
+<title>{{context.title}}</title>
+	<link rel="icon" href="/static/pic/1.jpg" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/pic/1.jpg" type="image/x-icon" />
+<script>
+function openVideo(src){
+	//alert("播放视频!");
+	alert("127.0.0.1:8000"+src);
+	var file=document.getElementById('mp4');
+	var fileURL = window.URL.createObjectURL(src);
+	player.src=fileURL;
+	player.play();
+}
+
+$.ajax({  
+         type : "post",  
+         url : "http://127.0.0.1:8000/bing1/",  
+         data : data,  
+         async : false,  
+         success : function(data){  
+            alert(data)  
+         }  
+     });
+
+</script>
+
+<style type="text/css">
+
+<!--
+
+
+img{
+		float: left; 
+		width: 100px;
+		height:150px;
+		vertical-align:middle;
+	  }
+	  
+video{
+	float: left; 
+	
+	vertical-align:left;
+	}
+
+.box{
+	float: left; 
+	color:black;
+	font-size:12px;
+	text-align:leftwards;
+	}
+.box img
+{
+	width:30%;
+	heght:12%;
+}
+
+	
+p{
+	font-size:8px;
+	text-align:left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:3; 
+	-webkit-box-orient: vertical;
+	}
+
+-->
+</style>
+</head>
+
+<body>
+
+
+{% if context.person.1 < 18 %}
+<h3 align="center">时间：{{context.time | date:"Y-m-d H:i:s" }}</h3>
+{% else %}
+<h3 align="center">时间：{{context.time | date:"Y-m-d H:i:s" }}{{context.person.0}}</h3>
+{% endif %}
+
+<div>
+
+	{% if context.pic %}
+		{% for li in context.pic %}
+		<div style="float:left;width:33.3%;">
+			{% load static %}
+				<div class="box" >
+				
+					<video  muted width="400" height="280" controls  preload="none">
+					  <source src="/static/傳說/{{li}}" type="video/mp4">
+					</video>
+			
+		
+				</div>
+				<div class="box" >
+					
+					<p>
+						名前:{{context.person.0}}
+					<br>
+					 
+						年目:{{context.person.1}}
+					<br> 
+					
+						メール:{{li}}
+					<br> 
+					<br>
+					<br>
+					
+					</p>
+				</div>
+				
+				
+		</div>
+		
+			 	
+			
+			 
+			
+	{% empty %}
+		<li>no!</li>
+		{% endfor %}
+	{% endif %}
+</div>
+
+{% load mydigit %}
+	<br>
+	<br>
+	<p align="right">数量：{{context.num | mydigit:4}} </p>
+	
+</body>
+
+</html>
