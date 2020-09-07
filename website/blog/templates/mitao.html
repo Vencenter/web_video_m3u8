@@ -8,6 +8,36 @@
 
 <h3 align="center">欢迎访问樱花视频网站！</h3>
 
+<script>
+function add_index(id){
+	
+	/*var index; 
+
+	if(id>=10)
+	{
+
+	for (var i = Math.floor(id/10); i <Math.floor(id/10)+10; i++) 
+	{
+	
+	var str1="list";
+	var str2=String(i);
+
+	index	= window.document.getElementById(str1+str2);
+	index.innerHTML=i+10;
+	index.href="/mitao/"+String(i+10);
+
+	}
+	
+	}*/
+	//不需要用修改标签的函数，模板里输入列表即可
+	
+}
+function reduce_index(id){
+	
+//不需要用修改标签的函数，模板里输入列表即可
+	
+}
+</script>
 
 <style type="text/css">
 
@@ -37,18 +67,18 @@ p{
 </head>
 <body>
 
-<div class="page">
-<span><a href="/mitao/{{context.current_page | add:"-1"}}">上一页</a></span>
+<div class="page" id="index">
+<span><a href="/mitao/{{context.current_page | add:"-1"}}"   >上一页</a></span>
 {% if context.page_list %}
 	{% for pg in context.page_list %}
-		
-		<a href="/mitao/{{pg}}"> {{pg}} </a>
-	
+			<a id ="list{{pg}}" href="/mitao/{{pg}}"> {{pg}} </a>
 	{% endfor %}
 
 {% endif %}
 
-<span><a href="/mitao/{{context.current_page | add:"1"}}">下一页</a></span>
+&nbsp<span><a  href="/mitao/{{context.current_page | add:"1"}}" >下一页</a></span>
+
+
 </div>
 
 <br>
