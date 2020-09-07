@@ -25,7 +25,7 @@ def file(request):
     return HttpResponse("<h1>信じられない事はあなたはそんな人ですが、何も言わないで別れよう！！<h1>")
 
 def bing(request):
-    template=loader.get_template("bin2.html")
+    template=loader.get_template("bing.html")
 
     #*******************1******************************
     #c=Context({})
@@ -58,7 +58,7 @@ def bing(request):
     html=template.render(context=locals(), request=request)
     return HttpResponse(html)
 def fc2(request):
-    template=loader.get_template("bin3.html")
+    template=loader.get_template("fc2.html")
     pic_root="J:/flod/pic_image/FC-2/fc2/vedio/"
     root = os.listdir(pic_root)
     list_root=[]
@@ -72,7 +72,7 @@ def fc2(request):
     return HttpResponse(html)
 def params(request):
     print (0)
-    template=loader.get_template("bing.html")
+    template=loader.get_template("params1.html")
     id=request.GET.get("id")
     name=request.GET.get("name")
     url_data=[id,name]
@@ -83,7 +83,7 @@ def params(request):
     return HttpResponse(html)
 def params1(request,id,name):
     print (1)
-    template=loader.get_template("bing.html")
+    template=loader.get_template("params1.html")
     url_data=[id,name]
     context={"title":"日本語の世界に入ってくだい！","time":datetime.datetime.now(),"person":["三上優弥",24,"mikami@gmail.com"],"jyoyu":url_data}
     request_context = RequestContext(request, context)
@@ -142,12 +142,13 @@ def data(request):
     return HttpResponse(html)
 
 def mitao(request,page=1):
+    page=int(page)
     
     #from mitao import *
     #dlist=data()
     #for li in dlist:
-    #db=Mitao(title=li[0].decode("utf-8"),pic=li[1],address=li[2])
-    #db.save()
+        #db=Mitao(title=li[0].decode("utf-8"),pic=li[1],address=li[2])
+        #db.save()
     set_video_num=15
 
     data_list=[]
@@ -155,21 +156,42 @@ def mitao(request,page=1):
     template=loader.get_template("mitao.html")
     all_list=Mitao.objects.all()
 
-    for i in range((page-1)*set_video_num,page*set_video_num):
-        data_list.append(all_list[i])
-
-    data_list=[]
-    for i in range((page-1)*set_video_num,page*set_video_num):
-        data_list.append(all_list[i])
-
-    if(len(data_list)%set_video_num==0):
+    if (page<=0):
+        url="http://127.0.0.1:8000/mitao/"
+        return HttpResponseRedirect(url)
+        #return HttpResponse("<h2 align=\"center\">当前网址错误！<h2>")
+    if(len(all_list)%set_video_num==0):
         pages=len(all_list)/set_video_num
     else:
         pages=len(all_list)/set_video_num + 1
 
 
+    if(page>pages):
+        url="http://127.0.0.1:8000/mitao/"
+        return HttpResponseRedirect(url)
+        #return HttpResponse("<h2 align=\"center\">当前资源已加载完毕！<h2>")
+    
 
-    context={"title":"Player！","time":datetime.datetime.now(),"data":data_list,"num":len(all_list),"pages":pages,"current_page":page,"page_list":list(range(1,pages+1))}
+    try:
+        data_list=[]
+        for i in range((page-1)*set_video_num,page*set_video_num):
+            data_list.append(all_list[i])
+    except:
+        data_list=[]
+        for i in range((page-1)*set_video_num,len(all_list)):
+            data_list.append(all_list[i])
+        
+
+    
+
+    first=(page/10)*10+1
+    end=(page/10)*10+11
+    if(end>pages):
+        end=pages+1
+
+    page_range=range(first,end)
+
+    context={"title":"Player！","time":datetime.datetime.now(),"data":data_list,"num":len(all_list),"pages":pages,"current_page":page,"page_list":list(page_range)}
     request_context = RequestContext(request, context)
     request_context.push(locals())
     html=template.render(context=locals(), request=request)
@@ -196,24 +218,40 @@ def mitao_pages(request,page=1):
         url="http://127.0.0.1:8000/mitao/"
         return HttpResponseRedirect(url)
         #return HttpResponse("<h2 align=\"center\">当前网址错误！<h2>")
-
-
-    if(len(all_list)<(page-1)*set_video_num+1):
-        url="http://127.0.0.1:8000/mitao/"
-        return HttpResponseRedirect(url)
-        #return HttpResponse("<h2 align=\"center\">当前资源已加载完毕！<h2>")
-        
-
-    data_list=[]
-    for i in range((page-1)*set_video_num,page*set_video_num):
-        data_list.append(all_list[i])
-
-    if(len(data_list)%set_video_num==0):
+    if(len(all_list)%set_video_num==0):
         pages=len(all_list)/set_video_num
     else:
         pages=len(all_list)/set_video_num + 1
 
-    context={"title":"Player！","time":datetime.datetime.now(),"data":data_list,"num":len(all_list),"pages":pages,"current_page":page,"page_list":list(range(1,pages+1))}
+
+    if(page>pages):
+        url="http://127.0.0.1:8000/mitao/"
+        return HttpResponseRedirect(url)
+        #return HttpResponse("<h2 align=\"center\">当前资源已加载完毕！<h2>")
+
+
+    
+        
+
+    try:
+        data_list=[]
+        for i in range((page-1)*set_video_num,page*set_video_num):
+            data_list.append(all_list[i])
+    except:
+        data_list=[]
+        for i in range((page-1)*set_video_num,len(all_list)):
+            data_list.append(all_list[i])
+
+ 
+
+    first=(page/10)*10+1
+    end=(page/10)*10+11
+    if(end>pages):
+        end=pages+1
+
+    page_range=range(first,end)
+
+    context={"title":"Player！","time":datetime.datetime.now(),"data":data_list,"num":len(all_list),"pages":pages,"current_page":page,"page_list":list(page_range)}
     request_context = RequestContext(request, context)
     request_context.push(locals())
     html=template.render(context=locals(), request=request)
